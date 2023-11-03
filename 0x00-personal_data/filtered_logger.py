@@ -62,3 +62,21 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         user=username,
         password=pswd)
     return conn
+
+
+def main() -> None:
+    """retrieves and displays table from db"""
+    db = get_db()
+    curs = db.cursor()
+    curs.execute("SELECT * FROM users;")
+    for row in curs:
+        res = f"name={row[0]}; email={row[1]}; phone={row[2]}; " +\
+            f"ssn={row[3]}; password={row[4]};ip={row[5]}; " +\
+            f"last_login={row[6]}; user_agent={row[7]};"
+        print(res)
+    curs.close()
+    db.close()
+
+
+if __name__ == '__main__':
+    main()
