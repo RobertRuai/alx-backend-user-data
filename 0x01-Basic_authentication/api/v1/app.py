@@ -20,6 +20,7 @@ if os.getenv("AUTH_TYPE") == "auth":
 if os.getenv("AUTH_TYPE") == "basic_auth":
     auth = BasicAuth()
 
+
 @app.errorhandler(404)
 def not_found(error) -> str:
     """ Not found handler
