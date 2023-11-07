@@ -4,11 +4,19 @@ from flask import request
 from typing import List, TypeVar
 
 
-class Auth():
+class Auth:
     """auth class"""
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """returns args"""
-        return False
+        if path is None or not excluded_paths:
+            return True
+        if path[-1] != '/':
+            path = path + '/'
+        else:
+            path
+        if path in excluded_paths:
+            return False
+        return True
 
     def authorization_header(self, request=None) -> str:
         """auth header function"""
