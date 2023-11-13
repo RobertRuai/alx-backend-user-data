@@ -10,6 +10,10 @@ from sqlalchemy.orm.session import Session
 from user import Base, User
 
 
+valid_keys = {'id', 'email', 'hashed_password', 'session_id',
+              'reset_token'}
+
+
 class DB:
     """DB class
     """
@@ -42,9 +46,6 @@ class DB:
 
     def find_user_by(self, **kwargs) -> User:
         """returns the first row found in users table"""
-        valid_keys = {'id', 'email', 'hashed_password', 'session_id',
-                      'reset_token'}
-
         for key, value in kwargs.items():
             if key not in valid_keys:
                 raise InvalidRequestError
@@ -52,3 +53,12 @@ class DB:
             return self._session.query(User).filter_by(**kwargs).one()
         except Exception:
             raise NoResultFound
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """update the user’s changes to the database"""
+        f_user = self.find_user_by(id=user_id)
+        for k, v in kwargs.items():
+            if k not in valid_keys:
+                raise ValueError
+            setattr(f_user, k, v)
+        self._session.commit()
