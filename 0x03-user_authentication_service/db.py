@@ -4,10 +4,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.exc import InvalidRequestError
-from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.orm.session import Session
 from user import Base, User
+from sqlalchemy.exc import InvalidRequestError
+from sqlalchemy.orm.exc import NoResultFound
 
 
 valid_keys = ['id', 'email', 'hashed_password', 'session_id',
@@ -37,12 +37,10 @@ class DB:
 
     def add_user(self, email: str, hashed_password: str) -> User:
         """Add user to the database"""
-        if not email or not hashed_password:
-            return
-        d_user = User(email=email, hashed_password=hashed_password)
+        user = User(email=email, hashed_password=hashed_password)
         self._session.add(d_user)
         self._session.commit()
-        return d_user
+        return user
 
     def find_user_by(self, **kwargs) -> User:
         """returns the first row found in users table"""
