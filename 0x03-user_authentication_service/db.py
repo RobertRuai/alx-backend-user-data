@@ -10,8 +10,8 @@ from sqlalchemy.orm.session import Session
 from user import Base, User
 
 
-valid_keys = {'id', 'email', 'hashed_password', 'session_id',
-              'reset_token'}
+valid_keys = ['id', 'email', 'hashed_password', 'session_id',
+              'reset_token']
 
 
 class DB:
