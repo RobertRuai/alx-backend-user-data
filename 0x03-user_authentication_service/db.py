@@ -10,7 +10,7 @@ from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
 
 
-VALID_KEYS = ['id', 'email', 'hashed_password', 'session_id',
+valid_keys = ['id', 'email', 'hashed_password', 'session_id',
               'reset_token']
 
 
