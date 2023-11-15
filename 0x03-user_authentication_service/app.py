@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """ Flask Application """
-from flask import Flask, jsonify, request, abort, redirect, url_for
+from flask import Flask, jsonify, request, abort, redirect
 from auth import Auth
 
 
@@ -50,8 +50,9 @@ def logout():
         user = AUTH.get_user_from_session_id(sesh_id)
         if user:
             AUTH.destroy_session(user.id)
-            return redirect(url_for(message))
-        abort(403)
+            return redirect('/')
+        else:
+            abort(403)
     abort(403)
 
 
