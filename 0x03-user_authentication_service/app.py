@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """ Flask Application """
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, redirect
 from auth import Auth
 
 
@@ -40,6 +40,16 @@ def login():
         abort(500)
     except Exception as e:
         abort(401)
+
+
+@app.route('/sessions', methods=['DELETE'], strict_slashes=False)
+def logout():
+    """logsout a user"""
+    sesh_id = request.cookies.get('session_id', None)
+    if sesh_id is not None:
+        AUTH.destroy_seseeion(sesh_id)
+        return redirect(url_for(message))
+    abort(403)
 
 
 if __name__ == "__main__":
