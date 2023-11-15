@@ -59,10 +59,10 @@ class Auth:
 
     def get_user_from_session_id(session_id: str) -> (User | None):
         """ returns the corresponding User or None"""
-        try:
-            if session_id:
+        if session_id:
+            try:
                 user = self._db.find_user_by(session_id=session_id)
-            return
-        except NoResultFound:
-            return
-        return user
+            except NoResultFound:
+                return None
+            return user
+        return None
