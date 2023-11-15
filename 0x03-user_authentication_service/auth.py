@@ -13,7 +13,7 @@ def _hash_password(password: str) -> bytes:
     return hashed
 
 
-def __generate_uuid() -> str:
+def _generate_uuid() -> str:
     """generates uuid"""
     return str(uuid.uuid4())
 
