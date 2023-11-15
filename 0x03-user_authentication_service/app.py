@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """ Flask Application """
-from flask import Flask, jsonify, request, abort, redirect
+from flask import Flask, jsonify, request, abort, redirect, url_for
 from auth import Auth
 
 
@@ -47,8 +47,11 @@ def logout():
     """logsout a user"""
     sesh_id = request.cookies.get('session_id', None)
     if sesh_id is not None:
-        AUTH.destroy_seseeion(sesh_id)
-        return redirect(url_for(message))
+        user = AUTH.get_user_from_session_id(sesh_id)
+        if user:
+            AUTH.destroy_session(user.id)
+            return redirect(url_for(message))
+        abort(403)
     abort(403)
 
 
